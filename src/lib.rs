@@ -8,6 +8,9 @@ use rand::{Rng, SeedableRng};
 use rand_pcg::Pcg64Mcg;
 use rayon::prelude::{IntoParallelIterator, ParallelIterator};
 
+mod brownian_motion;
+pub use brownian_motion::{BrownianMotion, GeometricBrownianMotion};
+
 pub type Vector = Array1<f64>;
 
 pub type ExperimentRng = Pcg64Mcg;
@@ -72,6 +75,15 @@ where
 pub struct TestTheoryResult<S: Sample> {
     theoretical_result: S,
     empirical_mean: S,
+}
+
+impl<S> TestTheoryResult<S>
+where
+    S: Sample,
+{
+    pub fn parts(&self) -> (&S, &S) {
+        (&self.theoretical_result, &self.empirical_mean)
+    }
 }
 
 pub fn test_theory<P, E, S, T, R>(
