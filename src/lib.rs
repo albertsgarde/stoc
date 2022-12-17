@@ -3,7 +3,7 @@ use std::{
     ops::{Add, Div},
 };
 
-use ndarray::Array1;
+use ndarray::{Array1, Array2};
 use rand::{Rng, SeedableRng};
 use rand_pcg::Pcg64Mcg;
 use rayon::prelude::{IntoParallelIterator, ParallelIterator};
@@ -12,6 +12,7 @@ mod brownian_motion;
 pub use brownian_motion::{BrownianMotion, GeometricBrownianMotion};
 
 pub type Vector = Array1<f64>;
+pub type Matrix = Array2<f64>;
 
 pub type ExperimentRng = Pcg64Mcg;
 
@@ -71,7 +72,7 @@ where
     S::mean(total)
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone, Copy)]
 pub struct TestTheoryResult<S: Sample> {
     theoretical_result: S,
     empirical_mean: S,

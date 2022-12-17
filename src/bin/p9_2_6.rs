@@ -6,8 +6,6 @@ use std::{
     ops::{Add, Div},
 };
 
-use stoc::{test_theory, Vector};
-
 use float_cmp::approx_eq;
 use ndarray::Array1;
 use num::{traits::Pow, Float};
@@ -15,6 +13,7 @@ use rand::{Rng, SeedableRng};
 use rand_distr::{Bernoulli, Distribution, Exp, Poisson, Uniform};
 use rand_pcg::Pcg64Mcg;
 use rayon::prelude::{IntoParallelIterator, ParallelIterator};
+use stoc::{test_theory, Vector};
 
 const SEED: u128 = 1;
 const MAX_THREADS: u32 = 8;
