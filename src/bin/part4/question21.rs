@@ -16,7 +16,7 @@ impl Default for Parameters {
         Self {
             model_parameters: ModelParameters::default(),
             start_state: 4.,
-            critical_value: 10.,
+            critical_value: 100.,
         }
     }
 }
@@ -32,8 +32,7 @@ fn experiment(parameters: &Parameters, rng: &mut impl Rng) -> f64 {
     while process.state() >= 0. && process.state() <= b {
         process.step(rng);
     }
-
-    if process.state() >= b {
+    if process.state() <= 0. {
         1.
     } else {
         0.
@@ -50,11 +49,12 @@ fn theory(parameters: &Parameters) -> f64 {
 
         },
         start_state: x,
-        critical_value: b,
+        critical_value: _,
     } = parameters;
     let mu = det_mean-rep_mean;
     let sigma_squared = det_var+rep_var;
-    (1.-(-2.*mu*x/sigma_squared).exp())/(1.-(-2.*mu*b/sigma_squared).exp())
+
+    (-2.*mu*x/sigma_squared).exp()
 }
 
 pub fn main() {
@@ -66,7 +66,7 @@ pub fn main() {
         experiment,
         theory,
         &parameters,
-        1_000_000,
+        1_000,
         MAX_THREADS,
         &mut rng,
     );

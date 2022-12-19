@@ -3,6 +3,7 @@ use rand::Rng;
 use rand_distr::{Distribution, Normal};
 
 mod question20;
+mod question21;
 
 const SEED: u128 = 4;
 const MAX_THREADS: u32 = 8;
@@ -66,6 +67,7 @@ fn main() {
         .expect("Could not parse question number.");
     match question {
         20 => question20::main(),
+        21 => question21::main(),
         _ => panic!("Unrecognized question number"),
     }
 }

@@ -1,6 +1,6 @@
 use std::{
     fmt::Display,
-    ops::{Add, Div},
+    ops::{Add, Div}, time::{Instant, Duration},
 };
 
 use ndarray::{Array1, Array2};
@@ -76,6 +76,7 @@ where
 pub struct TestTheoryResult<S: Sample> {
     theoretical_result: S,
     empirical_mean: S,
+    time_elapsed: Duration,
 }
 
 impl<S> TestTheoryResult<S>
@@ -84,6 +85,10 @@ where
 {
     pub fn parts(&self) -> (&S, &S) {
         (&self.theoretical_result, &self.empirical_mean)
+    }
+
+    pub fn time_elapsed(&self) -> Duration {
+        self.time_elapsed
     }
 }
 
@@ -102,11 +107,14 @@ where
     T: Fn(&P) -> S,
     R: Rng,
 {
+    let start_time = Instant::now();
     let empirical_mean = run_experiment(experiment, parameters, samples, max_threads, rng);
     let theoretical_result = theory(parameters);
+    let end_time = Instant::now();
     TestTheoryResult {
         theoretical_result,
         empirical_mean,
+        time_elapsed: end_time - start_time,
     }
 }
 
