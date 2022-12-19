@@ -109,3 +109,13 @@ where
         empirical_mean,
     }
 }
+
+#[macro_export]
+macro_rules! linux {
+    ($exp:expr) => {
+        #[cfg(target_os = "linux")]
+        $exp
+        #[cfg(not(target_os = "linux"))]
+        unimplemented!("Can only run on linux.")
+    };
+}

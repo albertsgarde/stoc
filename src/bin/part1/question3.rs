@@ -1,8 +1,7 @@
 use ndarray::s;
-use ndarray_linalg::Inverse;
 use rand::Rng;
 use rand_pcg::Pcg64Mcg;
-use stoc::{test_theory, Vector, Matrix};
+use stoc::{test_theory, Vector, Matrix, linux};
 
 use crate::{ModelParameters, MAX_THREADS, SEED, Process};
 
@@ -26,7 +25,12 @@ fn theory(parameters: &Parameters) -> f64 {
     } = parameters;
     let p = model_parameters.transition_matrix();
     let p = p.slice(s![0..model_parameters.a as usize, 0..model_parameters.a as usize]);
-    (Matrix::from_diag_elem(model_parameters.a as usize, 1.) - p).inv().unwrap().dot(&Vector::from_elem(model_parameters.a as usize, 1.))[0]
+    linux!{
+        {
+        use ndarray_linalg::solve::Inverse;
+        (Matrix::from_diag_elem(model_parameters.a as usize, 1.) - p).inv().unwrap().dot(&Vector::from_elem(model_parameters.a as usize, 1.))[0]
+        }
+    }
 }
 
 pub fn main() {
