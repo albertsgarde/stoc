@@ -36,8 +36,8 @@ fn advance_state(
         lambda,
         nu,
         servers,
-        sample_start,
-        sample_end,
+        sample_start: _,
+        sample_end: _,
     } = parameters;
 
     let mu = nu * (servers.min(*cur_state as u32) as f64);
@@ -54,9 +54,9 @@ fn advance_state(
 
 fn experiment(parameters: &Parameters, rng: &mut impl Rng) -> f64 {
     let &Parameters {
-        lambda,
-        nu,
-        servers,
+        lambda: _,
+        nu: _,
+        servers: _,
         sample_start,
         sample_end,
     } = parameters;
@@ -100,8 +100,8 @@ fn theory(parameters: &Parameters) -> f64 {
         lambda,
         nu,
         servers,
-        sample_start,
-        sample_end,
+        sample_start: _,
+        sample_end: _,
     } = parameters;
 
     if servers == 1 {
@@ -111,7 +111,7 @@ fn theory(parameters: &Parameters) -> f64 {
             / (1. + (lambda / nu) + lambda.powi(2) / (2. * nu.powi(2) * (1. - lambda / (2. * nu))));
         let l_0 = pi_0 / 2. * (lambda / nu).powi(2) * lambda
             / (2. * nu * (1. - lambda / (2. * nu)).powi(2));
-        let w_0 = l_0 / lambda;
+        let _w_0 = l_0 / lambda;
         let w = l_0 + 1. / nu;
         w
     } else {

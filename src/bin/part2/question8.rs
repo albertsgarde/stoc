@@ -16,8 +16,8 @@ fn experiment(parameters: &Parameters, rng: &mut impl Rng) -> f64 {
                 lambda1,
                 lambda2,
                 p1,
-                p2,
-                mu,
+                p2: _,
+                mu: _,
             },
     } = parameters;
 

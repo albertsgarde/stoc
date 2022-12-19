@@ -24,7 +24,7 @@ pub struct ModelParameters {
 impl ModelParameters {
     fn failure_pdf(&self, prev_failures: u64, next_failures: u64) -> f64 {
         let (k, l) = (prev_failures, next_failures);
-        let &Self { mu, p, a } = self;
+        let &Self { mu, p, a: _ } = self;
         (0..=(u64::min(k, l)))
             .map(|h| {
                 let binomial = (num_integer::binomial(k, h) as f64)
@@ -38,7 +38,7 @@ impl ModelParameters {
     }
 
     fn transition_matrix(&self) -> Matrix {
-        let &Self { mu, p, a } = self;
+        let &Self { mu: _, p: _, a } = self;
         let a = a as usize;
         Matrix::from_shape_fn((a + 1, a + 1), |(k, l)| {
             if k < a && l < a {
@@ -91,13 +91,9 @@ impl Process {
         self.state
     }
 
-    fn cur_day(&self) -> u64 {
-        self.cur_day
-    }
-
     fn step(&mut self, rng: &mut impl Rng) {
-        let &mut Self { parameters, state, cur_day, failure_distribution } = self;
-        let &ModelParameters { mu, p, a } = &parameters;
+        let &mut Self { parameters, state, cur_day: _, failure_distribution } = self;
+        let &ModelParameters { mu: _, p, a: _ } = &parameters;
     
         let new_failures = failure_distribution.sample(rng) as u64;
         let kept_failures = Binomial::new(state, 1.-p).unwrap().sample(rng);

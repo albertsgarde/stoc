@@ -34,9 +34,9 @@ fn advance_state(
     let &Parameters {
         lambda,
         mu,
-        n,
-        sample_start,
-        sample_end,
+        n: _,
+        sample_start: _,
+        sample_end: _,
     } = parameters;
     if *cur_state == 0 {
         let birth_time = Exp::new(lambda).unwrap().sample(rng);
@@ -58,8 +58,8 @@ fn advance_state(
 
 fn experiment(parameters: &Parameters, rng: &mut impl Rng) -> Vector {
     let &Parameters {
-        lambda,
-        mu,
+        lambda: _,
+        mu: _,
         n,
         sample_start,
         sample_end,
@@ -94,8 +94,8 @@ fn theory(parameters: &Parameters) -> Vector {
         lambda,
         mu,
         n,
-        sample_start,
-        sample_end,
+        sample_start: _,
+        sample_end: _,
     } = parameters;
     let theta = lambda / mu;
     let pi_0 = 1. - theta;

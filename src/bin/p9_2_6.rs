@@ -21,7 +21,6 @@ const MAX_THREADS: u32 = 8;
 struct Parameters {
     lambda: f64,
     nu: f64,
-    max_probability: f64,
     capacity: u64,
     sample_start: f64,
     sample_end: f64,
@@ -36,10 +35,9 @@ fn advance_state(
     let &Parameters {
         lambda,
         nu,
-        max_probability,
-        capacity,
-        sample_start,
-        sample_end,
+        capacity: _,
+        sample_start: _,
+        sample_end: _,
     } = parameters;
 
     let mu = if *cur_state > 0 { nu } else { 0. };
@@ -56,9 +54,8 @@ fn advance_state(
 
 fn experiment(parameters: &Parameters, rng: &mut impl Rng) -> f64 {
     let &Parameters {
-        lambda,
-        nu,
-        max_probability,
+        lambda: _,
+        nu: _,
         capacity,
         sample_start,
         sample_end,
@@ -92,10 +89,9 @@ fn theory(parameters: &Parameters) -> f64 {
     let &Parameters {
         lambda,
         nu,
-        max_probability,
         capacity,
-        sample_start,
-        sample_end,
+        sample_start: _,
+        sample_end: _,
     } = parameters;
 
     let rho = lambda / nu;
@@ -114,7 +110,6 @@ fn main() {
     let parameters = Parameters {
         lambda: 1.8,
         nu: 6.,
-        max_probability: 0.001,
         capacity: 5,
         sample_start: 100.,
         sample_end: 200.,

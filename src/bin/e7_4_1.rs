@@ -45,7 +45,7 @@ fn experiment(_parameters: &Parameters, rng: &mut impl Rng) -> f64 {
     cur_epochs as f64 - 1.
 }
 
-fn theory(parameters: &Parameters) -> f64 {
+fn theory(_parameters: &Parameters) -> f64 {
     TIME / (2. / 3.) - 7. / 24.
 }
 

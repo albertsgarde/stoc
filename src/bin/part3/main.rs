@@ -13,9 +13,6 @@ type Hf64 = Reverse<OrderedFloat<f64>>;
 fn to_hf(x: f64) -> Hf64 {
     Reverse(OrderedFloat(x))
 }
-fn from_hf(x: Hf64) -> f64 {
-    x.0 .0
-}
 
 #[derive(Debug, Clone, Copy)]
 pub struct ModelParameters {
@@ -54,20 +51,12 @@ impl Process {
         }
     }
 
-    fn state(&self) -> u32 {
-        self.state
-    }
-
     fn time(&self) -> f64 {
         self.cur_time
     }
 
     fn pause_arrivals(&mut self) {
         self.no_arrivals = true
-    }
-
-    fn resume_arrivals(&mut self) {
-        self.no_arrivals = false
     }
 
     fn start_available_units(&mut self, rng: &mut impl Rng) {

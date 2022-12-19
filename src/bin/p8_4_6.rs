@@ -46,7 +46,7 @@ fn experiment(parameters: &Parameters, rng: &mut impl Rng) -> f64 {
 fn theory(parameters: &Parameters) -> f64 {
     let &Parameters {
         std_dev,
-        start_value,
+        start_value: _,
         step_size: _,
         stop_t: _,
     } = parameters;

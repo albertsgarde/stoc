@@ -36,8 +36,8 @@ fn advance_state(
         lambda,
         nu,
         capacity,
-        sample_start,
-        sample_end,
+        sample_start: _,
+        sample_end: _,
     } = parameters;
 
     let mu = if *cur_state > 0 { nu } else { 0. };
@@ -55,8 +55,8 @@ fn advance_state(
 
 fn experiment(parameters: &Parameters, rng: &mut impl Rng) -> Vector {
     let &Parameters {
-        lambda,
-        nu,
+        lambda: _,
+        nu: _,
         capacity,
         sample_start,
         sample_end,
@@ -101,8 +101,8 @@ fn theory(parameters: &Parameters) -> Vector {
         lambda,
         nu,
         capacity,
-        sample_start,
-        sample_end,
+        sample_start: _,
+        sample_end: _,
     } = parameters;
 
     let rho = lambda / nu;

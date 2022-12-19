@@ -8,7 +8,6 @@ use crate::{ModelParameters, Process, MAX_THREADS, SEED};
 #[derive(Debug, Clone, Copy)]
 struct Parameters {
     model_parameters: ModelParameters,
-    days: f64,
     min_run_time: f64,
     max_run_time: f64,
 }
@@ -16,7 +15,6 @@ struct Parameters {
 fn experiment(parameters: &Parameters, rng: &mut impl Rng) -> f64 {
     let &Parameters {
         model_parameters,
-        days,
         min_run_time,
         max_run_time,
     } = parameters;
@@ -45,7 +43,6 @@ pub fn main() {
             failure_rate: 4.,
             service_time: 2.,
         },
-        days: 2.,
         min_run_time: 100.,
         max_run_time: 200.,
     };

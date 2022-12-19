@@ -35,8 +35,8 @@ fn advance_state(
         alpha,
         beta,
         n,
-        sample_start,
-        sample_end,
+        sample_start: _,
+        sample_end: _,
     } = parameters;
     let lambda = alpha * ((n - *cur_state) as f64);
     let mu = beta * (*cur_state as f64);
@@ -53,8 +53,8 @@ fn advance_state(
 
 fn experiment(parameters: &Parameters, rng: &mut impl Rng) -> Vector {
     let &Parameters {
-        alpha,
-        beta,
+        alpha: _,
+        beta: _,
         n,
         sample_start,
         sample_end,
@@ -85,8 +85,8 @@ fn theory(parameters: &Parameters) -> Vector {
         alpha,
         beta,
         n,
-        sample_start,
-        sample_end,
+        sample_start: _,
+        sample_end: _,
     } = parameters;
     let pi_0 = 1. / (1. + alpha / beta).powi(n as i32);
 

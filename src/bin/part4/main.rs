@@ -1,21 +1,11 @@
-use std::{cmp::Reverse, collections::BinaryHeap, env};
-
-use ordered_float::OrderedFloat;
+use std::{env};
 use rand::Rng;
-use rand_distr::{Distribution, Exp, Poisson, Normal};
+use rand_distr::{Distribution, Normal};
 
 mod question20;
 
 const SEED: u128 = 4;
 const MAX_THREADS: u32 = 8;
-
-type Hf64 = Reverse<OrderedFloat<f64>>;
-fn to_hf(x: f64) -> Hf64 {
-    Reverse(OrderedFloat(x))
-}
-fn from_hf(x: Hf64) -> f64 {
-    x.0 .0
-}
 
 #[derive(Debug, Clone, Copy)]
 pub struct ModelParameters {
@@ -38,7 +28,6 @@ impl Default for ModelParameters {
 
 #[derive(Debug, Clone)]
 pub struct Process {
-    parameters: ModelParameters,
     step_size: f64,
     state: f64,
     cur_time: f64,
@@ -49,7 +38,6 @@ pub struct Process {
 impl Process {
     fn new(parameters: ModelParameters, start_state: f64, step_size: f64) -> Self {
         Self {
-            parameters,
             step_size,
             state: start_state,
             cur_time: 0.,
@@ -60,10 +48,6 @@ impl Process {
 
     fn state(&self) -> f64 {
         self.state
-    }
-
-    fn time(&self) -> f64 {
-        self.cur_time
     }
 
     fn step(&mut self, rng: &mut impl Rng) {
