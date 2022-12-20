@@ -1,10 +1,11 @@
 use std::{cmp::Reverse, collections::BinaryHeap, env};
 
 use ordered_float::OrderedFloat;
-use rand::Rng;
+use rand::{Rng};
 use rand_distr::{Distribution, Exp, Poisson};
 
 mod question13;
+mod question18;
 
 const SEED: u128 = 4;
 const MAX_THREADS: u32 = 8;
@@ -19,16 +20,7 @@ pub struct ModelParameters {
     pub units: u32,
     pub failure_rate: f64,
     pub service_time: f64,
-}
-
-impl Default for ModelParameters {
-    fn default() -> Self {
-        Self {
-            units: 9,
-            failure_rate: 4.,
-            service_time: 2.,
-        }
-    }
+    pub service_startup_time: f64,
 }
 
 #[derive(Debug, Clone)]
@@ -129,6 +121,7 @@ fn main() {
         .expect("Could not parse question number.");
     match question {
         13 => question13::main(),
+        18 => question18::main(),
         _ => panic!("Unrecognized question number"),
     }
 }

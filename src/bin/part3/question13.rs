@@ -42,6 +42,7 @@ pub fn main() {
             units: 9,
             failure_rate: 4.,
             service_time: 2.,
+            service_startup_time: 0.,
         },
         min_run_time: 100.,
         max_run_time: 200.,

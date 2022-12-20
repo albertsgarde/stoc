@@ -4,6 +4,7 @@ use rand_distr::{Distribution, Normal};
 
 mod question20;
 mod question21;
+mod question23;
 
 const SEED: u128 = 4;
 const MAX_THREADS: u32 = 8;
@@ -68,6 +69,7 @@ fn main() {
     match question {
         20 => question20::main(),
         21 => question21::main(),
+        23 => question23::main(),
         _ => panic!("Unrecognized question number"),
     }
 }
