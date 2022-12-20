@@ -19,9 +19,9 @@ impl Default for Parameters {
     fn default() -> Self {
         Self {
             model_parameters: ModelParameters {
-                det_mean: 3.,
+                det_mean: 0.,
                 det_var: 2.,
-                rep_mean: 2.,
+                rep_mean: 0.,
                 rep_var: 1.,
                 self_reversion: 0.1,
             },
