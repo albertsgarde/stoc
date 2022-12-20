@@ -47,11 +47,12 @@ fn theory(parameters: &Parameters) -> f64 {
                 det_var,
                 rep_mean,
                 rep_var,
-
+                self_reversion,
         },
         start_state: x,
         critical_value: b,
     } = parameters;
+    assert_eq!(self_reversion, 0., "Self-reversion is not supported in this question.");
     let mu = det_mean-rep_mean;
     let sigma_squared = det_var+rep_var;
     (1.-(-2.*mu*x/sigma_squared).exp())/(1.-(-2.*mu*b/sigma_squared).exp())

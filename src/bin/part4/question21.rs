@@ -46,11 +46,12 @@ fn theory(parameters: &Parameters) -> f64 {
                 det_var,
                 rep_mean,
                 rep_var,
-
+            self_reversion
         },
         start_state: x,
         critical_value: _,
     } = parameters;
+    assert_eq!(self_reversion, 0., "Self-reversion is not supported in this question.");
     let mu = det_mean-rep_mean;
     let sigma_squared = det_var+rep_var;
 
@@ -66,7 +67,7 @@ pub fn main() {
         experiment,
         theory,
         &parameters,
-        1_000,
+        10_000,
         MAX_THREADS,
         &mut rng,
     );
