@@ -6,6 +6,7 @@ mod question20;
 mod question21;
 mod question23;
 mod question26;
+mod question27;
 
 const SEED: u128 = 0;
 const MAX_THREADS: u32 = 8;
@@ -109,6 +110,7 @@ fn main() {
         21 => question21::main(),
         23 => question23::main(),
         26 => question26::main(),
+        27 => question27::main(),
         _ => panic!("Unrecognized question number"),
     }
 }
