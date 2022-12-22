@@ -28,7 +28,7 @@ fn experiment(parameters: &Parameters, rng: &mut impl Rng) -> f64 {
         critical_value: b,
     } = parameters;
 
-    let mut process = Process::new(model_parameters, start_state, 0.001);
+    let mut process = Process::from_params(model_parameters, start_state, 0.001);
     while process.state() >= 0. && process.state() <= b {
         process.step(rng);
     }

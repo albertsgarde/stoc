@@ -17,13 +17,15 @@ struct Parameters {
 
 impl Default for Parameters {
     fn default() -> Self {
+        let beta = 0.1f64;
+        let det_var = beta/(1.-(-beta).exp())*3.;
         Self {
             model_parameters: ModelParameters {
                 det_mean: 0.,
-                det_var: 2.,
+                det_var: det_var,
                 rep_mean: 0.,
-                rep_var: 1.,
-                self_reversion: 0.1,
+                rep_var: 0.,
+                self_reversion: beta,
             },
             start_state: 4.,
             critical_value: 10.,
@@ -52,7 +54,7 @@ fn experiment(parameters: &Parameters, rng: &mut impl Rng) -> f64 {
             0.
         }
     } else {
-        let mut process = Process::new(model_parameters, start_state, step_size);
+        let mut process = Process::from_params(model_parameters, start_state, step_size);
         while process.time() < time {
             process.step(rng);
         }
@@ -79,8 +81,7 @@ fn theory(parameters: &Parameters) -> f64 {
         step_size: _,
         use_ou_process: _,
     } = parameters;
-    let old_sigma_squared = det_var+rep_var;
-    let sigma_squared = beta/(1.-(-beta).exp())*old_sigma_squared;
+    let sigma_squared = det_var+rep_var;
     let mean = nu*(-beta*t).exp();
     let variance = sigma_squared*(1.-(-2.*beta*t).exp())/(2.*beta);
 
@@ -92,8 +93,8 @@ pub fn main() {
     let mut rng = Pcg64Mcg::new(SEED);
 
     let parameters = Parameters {
-        step_size: 0.001,
-        use_ou_process: true,
+        step_size: 0.0001,
+        use_ou_process: false,
         ..Parameters::default()
     };
 
@@ -101,7 +102,7 @@ pub fn main() {
         experiment,
         theory,
         &parameters,
-        400_000,
+        40_000,
         MAX_THREADS,
         &mut rng,
     );

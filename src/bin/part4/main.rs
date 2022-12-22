@@ -42,7 +42,8 @@ pub struct Process {
 }
 
 impl Process {
-    fn new(parameters: ModelParameters, start_state: f64, step_size: f64) -> Self {
+
+    fn from_params(parameters: ModelParameters, start_state: f64, step_size: f64) -> Self {
         Self {
             step_size,
             state: start_state,

@@ -1,6 +1,6 @@
 use std::env;
 
-mod question8;
+mod question9;
 
 const SEED: u128 = 4;
 const MAX_THREADS: u32 = 8;
@@ -32,13 +32,19 @@ impl ModelParameters {
     }
 }
 
+impl Default for ModelParameters {
+    fn default() -> Self {
+        Self::from_p1(1./11.)
+    }
+}
+
 fn main() {
     let arg = env::args().nth(1).expect("No question number given.");
     let question = arg
         .parse::<u32>()
         .expect("Could not parse question number.");
     match question {
-        8 => question8::main(),
+        9 => question9::main(),
         _ => panic!("Unrecognized question number"),
     }
 }
