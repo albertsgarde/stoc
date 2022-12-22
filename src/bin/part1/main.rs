@@ -10,10 +10,6 @@ mod question3;
 const SEED: u128 = 4;
 const MAX_THREADS: u32 = 8;
 
-fn factorial(n: u64) -> u64 {
-    (1..=n).product()
-}
-
 #[derive(Debug, Clone, Copy)]
 pub struct ModelParameters {
     pub mu: f64,
@@ -31,7 +27,7 @@ impl ModelParameters {
                 * (1.-p).powi(h as i32)
                 * p.powi((k - h) as i32);
                 let poisson = (((1.-p) * mu).powi((l - h) as i32) * f64::exp(-(1.-p) * mu))
-                / (factorial(l - h) as f64);
+                / (stoc::factorial(l - h) as f64);
                 binomial * poisson
             })
             .sum::<f64>()

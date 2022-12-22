@@ -10,11 +10,17 @@ use rayon::prelude::{IntoParallelIterator, ParallelIterator};
 
 mod brownian_motion;
 pub use brownian_motion::{BrownianMotion, GeometricBrownianMotion};
+mod continuous_markov_process;
+pub use continuous_markov_process::{ContinuousMarkovTransitions, ContinuousMarkovProcess, MarkovQueueProbabilities, BirthAndDeathProbabilities};
 
 pub type Vector = Array1<f64>;
 pub type Matrix = Array2<f64>;
 
 pub type ExperimentRng = Pcg64Mcg;
+
+pub fn factorial(n: u64) -> u64 {
+    (1..=n).product()
+}
 
 pub trait Sample:
     Sized + Add<Self, Output = Self> + Div<f64, Output = Self> + Send + Sync + Display
