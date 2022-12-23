@@ -11,7 +11,7 @@ use rayon::prelude::{IntoParallelIterator, ParallelIterator};
 mod brownian_motion;
 pub use brownian_motion::{BrownianMotion, GeometricBrownianMotion};
 mod continuous_markov_process;
-pub use continuous_markov_process::{ContinuousMarkovTransitions, ContinuousMarkovProcess, MarkovQueueProbabilities, BirthAndDeathProbabilities};
+pub use continuous_markov_process::{ContinuousMarkovTransitions, ContinuousMarkovProcess, MarkovQueueProbabilities, BirthAndDeathProbabilities, MatrixTransitions};
 
 pub type Vector = Array1<f64>;
 pub type Matrix = Array2<f64>;

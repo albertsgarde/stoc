@@ -29,7 +29,7 @@ fn experiment(parameters: &Parameters, rng: &mut impl Rng) -> f64 {
 
     let sample_time = rng.gen_range(min_run_time..max_run_time);
 
-    let start_state = if Bernoulli::new(p1).unwrap().sample(rng) { 0} else {1};
+    let start_state = if Bernoulli::new(p1).unwrap().sample(rng) { 0 } else { 1 };
 
     let transition_matrix = Matrix::from_shape_vec((4, 4), vec![
         -lambda1, 0., lambda1, 0.,
@@ -39,23 +39,30 @@ fn experiment(parameters: &Parameters, rng: &mut impl Rng) -> f64 {
     ]).unwrap();
     let mut process = ContinuousMarkovProcess::new(MatrixTransitions::new(transition_matrix), start_state);
     
-    while process.time() < sample_time {
-        process.step(rng);
-    }
-    
+    /*process.step(rng);
     while process.state() != 0 && process.state() != 1 {
         process.step(rng);
     }
+    (process.time()-8.)*(process.time()-8.)*/
     
-    if process.time() - sample_time > time {
-        1. 
-    } else {
-        0.
+    while process.time() < sample_time {
+        process.step(rng);
     }
+
+    let mut total_repairs = 0;
+    
+    while process.time() < sample_time + time {
+        if process.state() == 0 || process.state() == 1 {
+            total_repairs += 1;
+        }
+        process.step(rng);
+    }
+    
+    (total_repairs as f64 - 25.)*(total_repairs as f64 - 25.)
 }
 
 fn theory(_parameters: &Parameters) -> f64 {
-    0.381
+    0.041
 }
 
 pub fn main() {
@@ -65,14 +72,14 @@ pub fn main() {
         model_parameters: ModelParameters::default(),
         min_run_time: 1000.,
         max_run_time: 2000.,
-        time: 8.,
+        time: 200.,
     };
 
     let result = test_theory(
         experiment,
         theory,
         &parameters,
-        10_000,
+        100_000,
         MAX_THREADS,
         &mut rng,
     );
